@@ -4,16 +4,8 @@ from django.http import Http404
 from rest_framework import status
 from products.models import Category, Banner, Products
 from users.models import Aboutus, Review
-from .serializers import (CategorySerializer, ProductsSerializer, BannerSerializer, AboutusSerializer,
-                          ReviewSerializer)
-from rest_framework.permissions import AllowAny
+from .serializers import (CategorySerializer, ProductsSerializer, BannerSerializer, AboutusSerializer, ReviewSerializer)
 from rest_framework.response import Response
-from django.contrib.auth.models import User
-from rest_framework.authentication import TokenAuthentication
-from rest_framework import generics
-from rest_framework.validators import UniqueValidator
-from django.contrib.auth.password_validation import validate_password
-from rest_framework import permissions
 
 
 class CategoryAPIView(APIView):
@@ -222,3 +214,10 @@ class ReviewDetail(APIView):
         review = self.get_object(pk)
         review.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class RegisterAPIView(APIView):
+    def get(self, request):
+        register = Register.objects.all()
+        serializer = ReviewSerializer(register, many=True)
+        return Response(serializer.data)

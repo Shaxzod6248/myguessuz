@@ -1,5 +1,4 @@
 from django.db import models
-from rest_framework import permissions
 from django.core.exceptions import ValidationError
 import os
 
@@ -11,39 +10,46 @@ def validate_file_extension(value):
         raise ValidationError('Unsupported file extension.')
 
 
+class Banner(models.Model):
+    theme_uz = models.CharField(max_length=10000, null=True)
+    theme_en = models.CharField(max_length=10000, null=True)
+    theme_ru = models.CharField(max_length=10000, null=True)
+    image = models.ImageField(upload_to="Bannerpic", null=True)
+
+    def __str__(self):
+        return self.theme_uz
+
+
 class Category(models.Model):
-    name_uz = models.CharField(max_length=20000)
-    name_ru = models.CharField(max_length=20000)
+    image = models.ImageField(upload_to='categoryimg', null=True)
+    name_uz = models.CharField(max_length=20000, null=True)
+    name_en = models.CharField(max_length=20000, null=True)
+    name_ru = models.CharField(max_length=20000, null=True)
+    banner = models.ForeignKey(Banner, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name_uz
 
 
 class Color(models.Model):
-    name_uz = models.CharField(max_length=200)
-    name_ru = models.CharField(max_length=200)
+    name_uz = models.CharField(max_length=200, null=True)
+    name_en = models.CharField(max_length=200, null=True)
+    name_ru = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return self.name_uz
 
 
-class Banner(models.Model):
-    theme_uz = models.CharField(max_length=10000)
-    theme_ru = models.CharField(max_length=10000)
-    image = models.ImageField(upload_to="Aboutuspic")
-
-    def __str__(self):
-        return self.theme_uz
-
-
 class Products(models.Model):
-    image = models.ImageField(upload_to='products_image')
-    title_uz = models.CharField(max_length=20000)
-    title_ru = models.CharField(max_length=20000)
-    description_uz = models.TextField()
-    description_ru = models.TextField()
-    price = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products_image', null=True)
+    title_uz = models.CharField(max_length=20000, null=True)
+    title_en = models.CharField(max_length=20000, null=True)
+    title_ru = models.CharField(max_length=20000, null=True)
+    description_uz = models.TextField(null=True)
+    description_en = models.TextField(null=True)
+    description_ru = models.TextField(null=True)
+    price = models.IntegerField(null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     color = models.ForeignKey(Color, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

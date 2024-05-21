@@ -1,20 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 
 class Aboutus(models.Model):
-    title_uz = models.CharField(max_length=10000)
-    title_ru = models.CharField(max_length=10000)
-    text_uz = models.TextField()
-    text_ru = models.TextField()
+    title_uz = models.CharField(max_length=10000, null=True)
+    title_en = models.CharField(max_length=10000, null=True)
+    title_ru = models.CharField(max_length=10000, null=True)
+    text_uz = models.TextField(null=True)
+    text_en = models.TextField(null=True)
+    text_ru = models.TextField(null=True)
 
     def __str__(self):
-        return self.theme_uz
+        return self.title_uz
 
 
 class Review(models.Model):
-    comment_uz = models.TextField()
-    comment_ru = models.TextField()
+    comment_uz = models.TextField(null=True)
+    comment_en = models.TextField(null=True)
+    comment_ru = models.TextField(null=True)
 
     def __str__(self):
         return self.comment_uz
