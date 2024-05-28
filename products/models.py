@@ -20,6 +20,17 @@ class Category(models.Model):
         return self.name_uz
 
 
+class Subcategory(models.Model):
+    name_uz = models.CharField(max_length=9000, null=True)
+    name_en = models.CharField(max_length=9000, null=True)
+    name_ru = models.CharField(max_length=9000, null=True)
+    image = models.ImageField(upload_to='Subcategoryimg', null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.name_en
+
+
 class Banner(models.Model):
     theme_uz = models.CharField(max_length=10000, null=True)
     theme_en = models.CharField(max_length=10000, null=True)
@@ -32,11 +43,13 @@ class Banner(models.Model):
 
 
 class Fotogallery(models.Model):
-    name = models.CharField(max_length=9000, null=True)
+    name_uz = models.CharField(max_length=9000, null=True)
+    name_en = models.CharField(max_length=9000, null=True)
+    name_ru = models.CharField(max_length=9000, null=True)
     image = models.ImageField(upload_to='Fotogalleryimg', null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.name_en
 
 
 class Color(models.Model):

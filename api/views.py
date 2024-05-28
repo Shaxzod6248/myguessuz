@@ -2,9 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import status
-from products.models import Category, Banner, Products, Fotogallery
+from products.models import Category, Banner, Products, Fotogallery, Subcategory
 from users.models import Aboutus, Review
-from .serializers import (CategorySerializer, ProductsSerializer, BannerSerializer, AboutusSerializer, ReviewSerializer, FotogallerySerializer)
+from .serializers import (CategorySerializer, ProductsSerializer, BannerSerializer, AboutusSerializer, ReviewSerializer, FotogallerySerializer, SubcategorySerializer)
 from rest_framework.response import Response
 
 
@@ -253,4 +253,44 @@ class FotogalleryDetail(APIView):
     def delete(self, request, pk):
         fotogallery = self.get_object(pk)
         fotogallery.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class SubcategoryAPIView(APIView):
+    def get(self, request):
+        subcategory = Subcategory.objects.all()
+        serializer = FotogallerySerializer(subcategory, context={'request': request}, many=True)
+        return Response(serializer.data)
+
+class SubcategoryDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Subcategory.objects.get(id=pk)
+        except Review.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        subcategory = self.get_object(pk)
+        serializer = SubcategorySerializer(subcategory)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        subcategory = self.get_object(pk)
+        serializer = SubcategorySerializer(subcategory, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, pk):
+        subcategory = self.get_object(pk)
+        serializer = SubcategorySerializer(subcategory, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        subcategory = self.get_object(pk)
+        subcategory.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
