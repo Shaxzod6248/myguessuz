@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
-from .views import (CategoryAPIView, ProductsAPIView, BannerAPIView, ReviewAPIView, AboutusAPIView,
-                    CategoriesDetail, ProductDetail, BannerDetail, AboutusDetail, ReviewDetail)
+from .views import (CategoryAPIView, ProductsAPIView, BannerAPIView, ReviewAPIView, AboutusAPIView, FotogalleryAPIView,
+                    CategoriesDetail, ProductDetail, BannerDetail, AboutusDetail, ReviewDetail, FotogalleryDetail)
 
 
 urlpatterns = [
+    path('fotogallery/', FotogalleryAPIView.as_view()),
     path('categories/', CategoryAPIView.as_view()),
     path('products/', ProductsAPIView.as_view()),
     path('banners/', BannerAPIView.as_view()),
@@ -16,4 +17,5 @@ urlpatterns = [
     path('banners/<int:pk>/', BannerDetail.as_view()),
     path('aboutus/<int:pk>/', AboutusDetail.as_view()),
     path('review/<int:pk>/', ReviewDetail.as_view()),
+    path('fotogallery/<int:pk>/', FotogalleryDetail.as_view())
 ]
