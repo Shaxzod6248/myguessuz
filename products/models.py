@@ -70,6 +70,7 @@ class Products(models.Model):
     description_ru = models.TextField(null=True)
     price = models.IntegerField(null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True)
     color = models.ForeignKey(Color, on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='Productimg', null=True)
 
