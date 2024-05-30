@@ -52,8 +52,7 @@ class CategoriesDetail(APIView):
 class BannerAPIView(APIView):
     def get(self, request):
         banners = Banner.objects.all()
-        serializer = BannerSerializer(
-            banners, context={'request': request}, many=True)
+        serializer = BannerSerializer(banners, context={'request': request}, many=True)
         return Response(serializer.data)
 
 
@@ -135,7 +134,7 @@ class ProductDetail(APIView):
 class AboutusAPIView(APIView):
     def get(self, request):
         aboutus = Aboutus.objects.all()
-        serializer = AboutusSerializer(aboutus, many=True)
+        serializer = AboutusSerializer(aboutus, context={'request': request}, many=True)
         return Response(serializer.data)
 
 
@@ -177,7 +176,7 @@ class AboutusDetail(APIView):
 class ReviewAPIView(APIView):
     def get(self, request):
         review = Review.objects.all()
-        serializer = ReviewSerializer(review, many=True)
+        serializer = ReviewSerializer(review, context={'request': request}, many=True)
         return Response(serializer.data)
 
 

@@ -17,7 +17,6 @@ class BannerSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    products = ProductsSerializer(read_only=True, many=True)
     class Meta:
         model = Category
         fields = '__all__'
